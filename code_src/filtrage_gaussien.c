@@ -4,7 +4,7 @@
 
 
 unsigned char** filtrageGaussien(double** entree, int nl, int nc) { 
-
+    printf("Entree filtrageGaussien");
     int i,j;
     int oldnl, oldnc;
     int sigma = 5;
@@ -27,10 +27,12 @@ unsigned char** filtrageGaussien(double** entree, int nl, int nc) {
     multiplication(im8, im9, filtreGaussienReel, filtreGaussienImag, im10, im11, nl, nc);
     fftshift(im10, im11, im5, im6, nl, nc); //Reprise des anciens images
     ifft(im5, im6, im8, im9, nl, nc);
+    printf("Presque sortie");
     return imdouble2char(im8, nl, nc);
 }
 
 void multiplication (double** entreReel1, double** entreImag1,
+        printf("Entree Multiplication");
         double** entreReel2, double** entreImag2, 
         double** sortieReel, double** sortieImag, 
         int nl, int nc){
@@ -43,6 +45,7 @@ void multiplication (double** entreReel1, double** entreImag1,
            sortieImag[i][j] = entreReel1[i][j]*entreImag2[i][j] + entreReel2[i][j]*entreImag1[i][j];
         }
     }
+    printf("Sortie Multiplication");
 }
 
 main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du resultat . */
