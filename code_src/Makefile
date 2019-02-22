@@ -7,5 +7,17 @@ essai1: essai1.o pgm.o
 essai2: essai2.o pgm.o fft.o
 	gcc $(LDFLAGS)  $^  -o $@
 
+filtrageGaussien: filtrage_gaussien.o pgm.o fft.o
+	gcc $(LDFLAGS)  $^  -o $@
+
+filtrageGaussien.o: filtrage_gaussien.c pgm.h fft.h math.h
+	gcc -o filtrage_gaussien.o -c filtrage_gaussien.c -W -Wall -ansi -pedantic
+
+clean:
+	rm -rf *.o
+
+mrproper: clean
+	rm -rf hello
+
 %.o:%.c
 	gcc $(CFLAGS) $<
