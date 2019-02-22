@@ -205,6 +205,15 @@ void libere_image(unsigned char** im) {
   free(*im); free(im);
 }
 
+/*
+    Libere la memoire associe a l'image im
+*/
+void libere_image_double(double** im) {
+free(*im); free(im);
+}
+
+
+
 	/*
 		Conversion d'une image de 8bits non signes en une image de double
 		Utilise en particulier pour fft

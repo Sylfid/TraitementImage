@@ -31,6 +31,7 @@ void ecritureimagedoubleraw(char*, double**,int lignes, int cols);
 unsigned char ** alloue_image(int nl, int nc);
 double ** alloue_image_double(int nl, int nc);
 void libere_image(unsigned char** im) ;
+void libere_image_double(double** im);
 
  double** imuchar2double(unsigned char **im, int nl, int nc);
 unsigned char**imdouble2uchar(double** im,int nl, int nc);
