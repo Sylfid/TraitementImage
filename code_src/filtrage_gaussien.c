@@ -3,11 +3,10 @@
 #include "pgm.h"
 
 
-unsigned char** filtrageGaussien(double** entree, int nl, int nc) { 
+unsigned char** filtrageGaussien(double** entree, int nl, int nc, float sigma) { 
     printf("Entree filtrageGaussien\n");
     int i,j;
     int oldnl, oldnc;
-    int sigma = 5;
     unsigned char** result;
     double** im7, ** im4, ** im5, ** im6, **im8, **im9, **im10=NULL, **im11=NULL;
     double** im12, **im13, **im14, **im15;
@@ -30,11 +29,15 @@ unsigned char** filtrageGaussien(double** entree, int nl, int nc) {
     im13 = alloue_image_double(nl,nc);
     im14 = alloue_image_double(nl,nc);
     im15 = alloue_image_double(nl,nc);
+
+
     fft(im7, im4, im5, im6, nl, nc); 
     fftshift(im5, im6, im8, im9, nl, nc);
     multiplication(im8, im9, filtreGaussienReel, filtreGaussienImag, im10, im11, nl, nc);
     fftshift(im10, im11, im12, im13, nl, nc); 
     ifft(im12, im13, im14, im15, nl, nc);
+
+
     libere_image_double(im4);
     libere_image_double(im5);
     libere_image_double(im6);
@@ -71,8 +74,26 @@ void multiplication (double** entreReel1, double** entreImag1,
     printf("Sortie Multiplication\n");
 }
 
+double psnr_maison(unsigned char** im1, unsigned char** im2, int nl, int nc){
+    double result = 0.0;
+    double** im1d, **im2d;
+    im1d = imuchar2double(im1,nl,nc);
+    im2d = imuchar2double(im2, nl, nc);
+    for(int i=0; i<nl; i++){
+        for(int j=0; j<nc; j++){
+            printf("%lf \n", result);
+            result += (im1d[i][j]-im2d[i][j]) *(im1d[i][j]-im2d[i][j]);
+        }
+    }
+    result = 10*(log(255*255)+log(nc*nl)-log(result));
+    printf("%e fin", result);
+    return result;
+
+}
+
 main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du resultat . */
   int nb,nl,nc, oldnl,oldnc;
+  float sigma = 1000.1;
   unsigned char **im2=NULL,** im1=NULL;
   //double** im4,** im5, ** im6, ** im7, **im8, **im9,**im10;
 
@@ -82,7 +103,11 @@ main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du
   if (im1==NULL)  { puts("Lecture image impossible"); exit(1); }
 	/* Calcul de son inverse video */
   double**im3=imuchar2double(im1,nl,nc);
-  im2=filtrageGaussien(im3, nl, nc);
+  im2=filtrageGaussien(im3, nl, nc,sigma);
+  double salut = psnr_maison(im1,im2, nl, nc); 
+  printf("youpi");
+  printf("\n%lf\n", salut); 
+  printf("olala");
 	/* Sauvegarde dans un fichier dont le nom est passe sur la ligne de commande */
   ecritureimagepgm(av[2],im2,nl,nc);
   libere_image(im1);
