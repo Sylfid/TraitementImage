@@ -101,11 +101,12 @@ double psnr_gaussien(unsigned char** im1, int nl, int nc, float sigma){
 
 main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du resultat . */
     int nb,nl,nc, oldnl,oldnc;
-    float sigma[100];
-    double result[100];
+    int nbIter = 200;
+    float sigma[200];
+    double result[200];
 
-    for(int i=0; i<100; i++){
-      sigma[i]=0.1+0.1*(double)i;
+    for(int i=0; i<nbIter; i++){
+      sigma[i] = 0.1 + 0.02*(double)i;
     }
     unsigned char **im2 = NULL, ** im1=NULL;
     //double** im4,** im5, ** im6, ** im7, **im8, **im9,**im10;
@@ -115,12 +116,40 @@ main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du
     im1=lectureimagepgm(av[1],&nl,&nc);
     if (im1==NULL)  { puts("Lecture image impossible"); exit(1); }
     /* Calcul de son inverse video */
-    for(int i=0; i<100; i++){
+    for(int i=0; i<nbIter; i++){
       result[i]=psnr_gaussien(im1, nl, nc, sigma[i]); 
     }
-    for(int i=0; i<100; i++){
+    /*for(int i=0; i<100; i++){
       printf("sigma : %f psnr : %f\n", sigma[i], result[i]);
-    } 
+    } */
+    FILE* fichier = NULL;
+
+
+    fichier = fopen("resultPSNR.txt", "r+");
+
+
+    if (fichier != NULL)
+
+    {
+
+        for(int i=0; i<nbIter ; i++){
+            fprintf(fichier, "%f %f\n", sigma[i], result[i]);
+        }
+        fclose(fichier);
+
+    }
+
+    else
+
+    {
+
+        // On affiche un message d'erreur si on veut
+
+        printf("Impossible d'ouvrir le fichier test.txt");
+
+    }
+
+
     /* Sauvegarde dans un fichier dont le nom est passe sur la ligne de commande */
     //double** im3 = imuchar2double(im1, nl, nc);
     im2 = filtrageGaussien(im1, nl, nc, 0.1);
