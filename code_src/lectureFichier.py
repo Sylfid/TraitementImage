@@ -12,8 +12,11 @@ def main():
     mon_fichier = open("resultPSNR.txt", "r")
 
     contenu = mon_fichier.read()
-    sigma = np.zeros(190)
-    result = np.zeros(190)
+    nbNombre = 398
+    sigma = np.zeros(nbNombre)
+    result = np.zeros(nbNombre)
+    result2 = np.zeros(nbNombre)
+    result3 = np.zeros(nbNombre)
     point = 0
     space = 0
     enter = 0
@@ -27,27 +30,43 @@ def main():
 
         if i == '\n':
             enter += 1
+            space=0
             point = 0
             carSpe = 1
 
         if i == '.' or point != 0:
             point += 1
 
-        if enter < 190:
+        if enter < nbNombre:
 
-            if space > enter and point == 0 and carSpe == 0:
-                result[enter] = float(i)+ 10*result[enter]
+            if space == 1 and point == 0 and carSpe == 0:
+                result[enter] = float(i)+ 10.*result[enter]
 
-            if space > enter and point > 1 and carSpe == 0:
-                result[enter] = result[enter] + float(i)*(10**point)
+            if space == 1 and point > 1 and carSpe == 0:
+                result[enter] = result[enter]+float(i)*(10.**(-point))
 
-            if space == enter and point == 0 and carSpe == 0:
-                sigma[enter] = float(i)+ 10*sigma[enter]
+            if space == 2 and point == 0 and carSpe == 0:
+                result2[enter] = float(i)+ 10.*result2[enter]
 
-            if space == enter and point > 1 and carSpe == 0:
-                sigma[enter] = sigma[enter] + float(i)*(10**point)
+            if space == 2 and point > 1 and carSpe == 0:
+                result2[enter] = result2[enter]+float(i)*(10.**(-point))
+
+            if space == 3 and point == 0 and carSpe == 0:
+                result3[enter] = float(i)+ 10.*result3[enter]
+
+            if space == 3 and point > 1 and carSpe == 0:
+                result3[enter] = result3[enter]+float(i)*(10.**(-point))
+
+            if space == 0 and point == 0 and carSpe == 0:
+                sigma[enter] = float(i)+ 10.*sigma[enter]
+
+            if space == 0 and point > 1 and carSpe == 0:
+                sigma[enter] = sigma[enter]+ float(i)*(10.**(-point))
     
-    #plot(sigma, result)
+    for i in result:
+        print(i)
+    plt.plot(sigma, result, sigma, result2, sigma, result3)
+    plt.show()
 
 
 

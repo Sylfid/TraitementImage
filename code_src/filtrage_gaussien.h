@@ -10,6 +10,6 @@ void multiplication (double** entreReel1, double** entreImag1,
         int nl, int nc);
 
 double psnr_maison(unsigned char** im1, unsigned char** im2, int nl, int nc);
-double psnr_gaussien(unsigned char** im1, int nl, int nc, float sigma);
+double psnr_gaussien(unsigned char** im1, unsigned char** im2, int nl, int nc, float sigma);
 #endif
 
