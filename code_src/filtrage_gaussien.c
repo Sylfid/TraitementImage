@@ -158,3 +158,4 @@ main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du
     libere_image(im2);
 
 }
+//test
