@@ -3,7 +3,7 @@
 #include "pgm.h"
 
 
-unsigned char ** filtrageGaussien(unsigned char** entree, int nl, int nc, double sigma) { 
+unsigned char ** filtrageGaussien(unsigned char** entree, int nl, int nc, double sigma) {
     int i,j;
     int oldnl, oldnc;
     unsigned char** result;
@@ -23,7 +23,7 @@ unsigned char ** filtrageGaussien(unsigned char** entree, int nl, int nc, double
 
     oldnl = nl; oldnc = nc;
     double** im3 = imuchar2double(entree, nl, nc);
-    im7 = padimdforfft(im3, &nl, &nc); 
+    im7 = padimdforfft(im3, &nl, &nc);
 
     im4 = alloue_image_double(nl,nc); im5 = alloue_image_double(nl,nc);
     im6 = alloue_image_double(nl,nc); im8 = alloue_image_double(nl,nc);
@@ -36,10 +36,10 @@ unsigned char ** filtrageGaussien(unsigned char** entree, int nl, int nc, double
     im15 = alloue_image_double(nl,nc);
 
 
-    fft(im7, im4, im5, im6, nl, nc); 
+    fft(im7, im4, im5, im6, nl, nc);
     fftshift(im5, im6, im8, im9, nl, nc);
     multiplication(im8, im9, filtreGaussienReel, filtreGaussienImag, im10, im11, nl, nc);
-    fftshift(im10, im11, im12, im13, nl, nc); 
+    fftshift(im10, im11, im12, im13, nl, nc);
     ifft(im12, im13, im14, im15, nl, nc);
 
 
@@ -59,12 +59,12 @@ unsigned char ** filtrageGaussien(unsigned char** entree, int nl, int nc, double
     libere_image_double(filtreGaussienImag);
     result = imdouble2char(im14, nl, nc);
     libere_image_double(im14);
-    return result; 
+    return result;
 }
 
 void multiplication (double** entreReel1, double** entreImag1,
-        double** entreReel2, double** entreImag2, 
-        double** sortieReel, double** sortieImag, 
+        double** entreReel2, double** entreImag2,
+        double** sortieReel, double** sortieImag,
         int nl, int nc){
     int i,j;
     if (sortieReel==NULL) sortieReel=alloue_image_double(nl,nc);
@@ -123,9 +123,9 @@ main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du
     if (im1bis==NULL)  { puts("Lecture image impossible"); exit(1); }
     /* Calcul de son inverse video */
     for(int i=0; i<nbIter; i++){
-      result[i]=psnr_gaussien(im1, im1, nl, nc, sigma[i]); 
-      result1[i]=psnr_gaussien(im1bis, im1, nl, nc, sigma[i]); 
-      result2[i]=psnr_gaussien(im2bis, im1, nl, nc, sigma[i]); 
+      result[i]=psnr_gaussien(im1, im1, nl, nc, sigma[i]);
+      result1[i]=psnr_gaussien(im1bis, im1, nl, nc, sigma[i]);
+      result2[i]=psnr_gaussien(im2bis, im1, nl, nc, sigma[i]);
     }
     /*for(int i=0; i<100; i++){
       printf("sigma : %f psnr : %f\n", sigma[i], result[i]);
@@ -164,4 +164,24 @@ main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du
     libere_image(im1bis);
     libere_image(im2bis);
 
+}
+
+void filtrage_write(char* filename_source, char* filename_dest, double sigma){
+    int nl,nc;
+    unsigned char ** im_source_char=NULL;
+    double **im_source_double=NULL;
+    double **im_dest_double=NULL;
+    unsigned char ** im_dest_char=NULL;
+
+    im_source_char = lectureimagepgm(filename_source,&nl,&nc);
+
+    im_dest_char = filtrageGaussien(im_source_char, nl, nc, sigma);
+
+    ecritureimagepgm(filename_dest, im_dest_char, nl, nc);
+
+    //liberation
+    libere_image(im_source_char);
+    //libere_image_double(im_source_double);
+    //libere_image_double(im_dest_double);
+    libere_image(im_dest_char);
 }

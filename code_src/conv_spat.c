@@ -104,7 +104,7 @@ void conv_spatial(char* filename_source, char* filename_dest, double sigma){
     double **im_dest_double=NULL;
     unsigned char ** im_dest_char=NULL;
 
-    printf("Debut des lecture de fichier\n");
+    //printf("Debut des lecture de fichier\n");
     im_source_char = lectureimagepgm(filename_source,&nl,&nc);
     im_source_double = imuchar2double(im_source_char, nl, nc);
 
