@@ -72,7 +72,7 @@ double** filt_separ(double** im_source, int nl, int nc, double sigma, int N){
     //printf("debut du calcul pour chaque point\n");
     for(int x = 0; x<nl; x++){
         //printf("ligne [%i]\n", x);;
-        for(int y = 0; y<nl; y++){
+        for(int y = 0; y<nc; y++){
             //printf("calcul du point [%i, %i]\n", x, y);
             //on fait la somme pour la convolution
             double res1 = 0;//la somme exterieur sur i
