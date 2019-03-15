@@ -65,11 +65,11 @@ double get_valeur(double** image, int nl, int nc, int x, int y){
     filtrage separe
 */
 double** filt_separ(double** im_source, int nl, int nc, double sigma, int N){
-    printf("calcul du filtrage separe\n");
+    //printf("calcul du filtrage separe\n");
     double **im_dest = alloue_image_double(nl, nc);
     double **tab_coef = make_coef(nl, nc, sigma);
     //iteration sur tout les points de l'image
-    printf("debut du calcul pour chaque point\n");
+    //printf("debut du calcul pour chaque point\n");
     for(int x = 0; x<nl; x++){
         //printf("ligne [%i]\n", x);;
         for(int y = 0; y<nl; y++){
