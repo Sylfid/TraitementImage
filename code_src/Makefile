@@ -4,6 +4,9 @@ LDFLAGS=-lm
 main_conv_spat: main_conv_spat.o conv_spat.o pgm.o
 	gcc $(LDFLAGS)  $^  -o $@
 
+comparaison_deux_methodes: comparaison_deux_methodes.o filtrage_gaussien.o conv_spat.o pgm.o fft.o
+	gcc $(LDFLAGS)  $^  -o $@
+
 essai1: essai1.o pgm.o
 	gcc $(LDFLAGS)  $^  -o $@
 
