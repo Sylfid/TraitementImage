@@ -4,17 +4,18 @@
 #include "pgm.h"
 
 
-int main (int ac, char **av)  {  
+int main (int ac, char **av)  {
     clock_t  debut ,  fin, debut2, fin2;
-    int nbIter = 400;
+    int nbIter = 40;
+    double incrementation = 1;
     int nl,nc;
     unsigned char ** im1=NULL;
     unsigned char ** resultchar=NULL;
     double **resultdouble = NULL;
-    double sigma = 0.1;
+    double sigma = 1;
     FILE* fichier = NULL;
 
-    fichier = fopen("resultTime.txt", "r+");
+    fichier = fopen("resultTime.txt", "w+");
 
     im1=lectureimagepgm(av[1],&nl,&nc);
     double **im1double = imuchar2double(im1,nl,nc);
@@ -29,15 +30,13 @@ int main (int ac, char **av)  {
 
     }
     for(int i=0; i<nbIter;i++){
-        sigma = sigma + 0.01;
-
-        debut=clock (); 
+        debut=clock ();
         resultchar = filtrageGaussien(im1, nl, nc, sigma);
         fin=clock ();
 
         libere_image(resultchar);
 
-        debut2=clock (); 
+        debut2=clock ();
         resultdouble = filt_separ(im1double, nl, nc, sigma, (int) 2*sigma);
         fin2=clock ();
 
@@ -45,12 +44,13 @@ int main (int ac, char **av)  {
         //double t = (double) fin - debut;
         if (fichier != NULL){
 
-            for(int i=0; i<nbIter ; i++){
+            //for(int i=0; i<nbIter ; i++){
                 fprintf(fichier, "%f %f %f\n", sigma, ((double) fin - debut)/
                         CLOCKS_PER_SEC, ((double) fin2 - debut2)/CLOCKS_PER_SEC);
-            }
-            fclose(fichier);
+            //}
         }
+        sigma = sigma + incrementation;
     }
+    fclose(fichier);
     return 0;
 }
