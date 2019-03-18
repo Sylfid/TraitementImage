@@ -19,6 +19,9 @@ filtrageGaussien: filtrage_gaussien.o pgm.o fft.o
 filtrageGaussien.o: filtrage_gaussien.c pgm.h fft.h math.h
 	gcc -o filtrage_gaussien.o -c filtrage_gaussien.c -W -Wall -ansi -pedantic
 
+mesureTemps: mesureTemps.o filtrage_gaussien.o conv_spat.o pgm.o fft.o
+	gcc $(LDFLAGS)  $^  -o $@
+	
 clean:
 	rm -rf *.o
 
