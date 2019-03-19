@@ -28,11 +28,16 @@ int main (int ac, char **av)  {
         exit(0);
 
     }
+    double temps1 = 0.0;
+    double temps2 = 0.0;
+
     for(int i=0; i<nbIter;i++){
+        printf("debut boucle %d\n", i);
         sigma = sigma + 0.01;
 
         debut=clock (); 
         resultchar = filtrageGaussien(im1, nl, nc, sigma);
+        printf(" ");
         fin=clock ();
 
         libere_image(resultchar);
@@ -42,15 +47,11 @@ int main (int ac, char **av)  {
         fin2=clock ();
 
         libere_image_double(resultdouble);
-        //double t = (double) fin - debut;
-        if (fichier != NULL){
 
-            for(int i=0; i<nbIter ; i++){
-                fprintf(fichier, "%f %f %f\n", sigma, ((double) fin - debut)/
-                        CLOCKS_PER_SEC, ((double) fin2 - debut2)/CLOCKS_PER_SEC);
-            }
-            fclose(fichier);
-        }
+        temps1 = ((double) fin - (double) debut)/CLOCKS_PER_SEC;
+        temps2 = ((double) fin2 - (double) debut2)/CLOCKS_PER_SEC;
+        fprintf(fichier, "%f %f %f\n", sigma, temps1, temps2);
     }
+    fclose(fichier);
     return 0;
 }

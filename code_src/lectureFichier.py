@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 def main():
     """ create a window, add scene objects, then run rendering loop """
 
-    mon_fichier = open("resultEQMR.txt", "r")
+    mon_fichier = open("resultTime.txt", "r")
 
     contenu = mon_fichier.read()
     nbNombre = 398
@@ -63,9 +63,7 @@ def main():
             if space == 0 and point > 1 and carSpe == 0:
                 sigma[enter] = sigma[enter]+ float(i)*(10.**(-point))
 
-    for i in result:
-        print(i)
-    plt.plot(sigma, result, sigma, result2, sigma, result3)
+    plt.plot(sigma, result, sigma, result2)#, sigma, result3)
     plt.show()
 
 

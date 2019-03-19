@@ -13,4 +13,5 @@ void multiplication (double** entreReel1, double** entreImag1,
 
 double psnr_maison(unsigned char** im1, unsigned char** im2, int nl, int nc);
 double psnr_gaussien(unsigned char** im1, unsigned char** im2, int nl, int nc, float sigma);
+double** convolution(double** image, double** filtre, int nl, int nc, int n);
 #endif

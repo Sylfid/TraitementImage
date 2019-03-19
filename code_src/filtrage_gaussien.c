@@ -9,9 +9,16 @@ unsigned char ** filtrageGaussien(unsigned char** entree, int nl, int nc, double
     unsigned char** result;
     double** im7=NULL, ** im4=NULL, ** im5=NULL, ** im6=NULL, **im8=NULL, **im9=NULL, **im10=NULL, **im11=NULL;
     double** im12=NULL, **im13=NULL, **im14=NULL, **im15=NULL;
+    double a=0., b=0.;
+
+
+    oldnl = nl; oldnc = nc;
+    double** im3 = imuchar2double(entree, nl, nc);
+    im7 = padimdforfft(im3, &nl, &nc);
+
     double** filtreGaussienReel = alloue_image_double(nl,nc);
     double** filtreGaussienImag = alloue_image_double(nl,nc);
-    double a=0., b=0.;
+
     for(i=0; i<nl; i++){
         for(j=0; j<nc; j++){
             a = ((double) i - (((double) nl)/ 2.))/((double) nl);
@@ -20,10 +27,7 @@ unsigned char ** filtrageGaussien(unsigned char** entree, int nl, int nc, double
             filtreGaussienImag[i][j]=0;
         }
     }
-
-    oldnl = nl; oldnc = nc;
-    double** im3 = imuchar2double(entree, nl, nc);
-    im7 = padimdforfft(im3, &nl, &nc);
+    
 
     im4 = alloue_image_double(nl,nc); im5 = alloue_image_double(nl,nc);
     im6 = alloue_image_double(nl,nc); im8 = alloue_image_double(nl,nc);
@@ -118,3 +122,44 @@ void filtrage_write(char* filename_source, char* filename_dest, double sigma){
     //libere_image_double(im_dest_double);
     libere_image(im_dest_char);
 }
+
+double** convolution(double** image, double** filtre, int nl, int nc, int n){
+
+    double** tampon = alloue_image_double(nl,nc);
+    double somme=0;
+    double valeurIm = 0;
+    if((int) (n/2) == (int) ((n+1)/2)){printf("Convolution n pair");exit(0);}
+    int a = (n+1)/2;
+    int valeurx = 0, valeury = 0;
+    for(int i=0; i<nl; i++){
+        for(int j=0; j<nc ; j++){
+            somme=0;
+            for(int k=0; k<n; k++){
+                for(int p=0; p<n; p++){
+                    valeurIm=0.0;
+                    valeurx=0;
+                    valeury=0;
+                    if(i-a+k<0){
+                        valeurx = a-i-k-1;
+                    }
+                    else if(i-a+k >nl-1){
+                        valeurx = i-a+k-1-2*(i-a+k-nl);
+                    } 
+                    else{valeurx = i-a+k;}
+                    
+                    if(j-a+p<0){
+                        valeury = a-j-p-1;
+                    }
+                    else if(j-a+p >nc-1){
+                        valeury = j-a+p-1-2*(j-a+p-nc);
+                    } 
+                    else{valeury = j-a+p;}
+                    somme += image[valeurx][valeury]*filtre[k][p]; 
+                }
+            }
+            tampon[i][j]=somme;
+        }
+    }
+    return tampon;
+}
+
