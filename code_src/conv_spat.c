@@ -1,6 +1,8 @@
 #include "pgm.h"
 #include <math.h>
 
+#define abs(x) (x>=0)?x:-x
+
 
 double calc_coef(int i, double sigma){
     return exp(-(i*i)/(2*sigma*sigma));;
@@ -66,7 +68,7 @@ double get_valeur(double** image, int nl, int nc, int x, int y){
 */
 double** filt_separ(double** im_source, int nl, int nc, double sigma, int N){
     //printf("calcul du filtrage separe\n");
-    double **im_dest = alloue_image_double(nl, nc);
+    double **im_inter = alloue_image_double(nl, nc);
     double **tab_coef = make_coef(nl, nc, sigma);
     //iteration sur tout les points de l'image
     //printf("debut du calcul pour chaque point\n");
@@ -75,13 +77,24 @@ double** filt_separ(double** im_source, int nl, int nc, double sigma, int N){
         for(int y = 0; y<nc; y++){
             //printf("calcul du point [%i, %i]\n", x, y);
             //on fait la somme pour la convolution
+            double res2 = 0;//la somme exterieur sur j
+            for(int j = -N; j<=N; j++){
+                res2 += tab_coef[1][abs(j)]*get_valeur(im_source, nl, nc, x, y+j);
+            }
+            //fin de la somme, on sauvegarde dans l'image
+            im_inter[x][y] = res2;
+        }
+    }
+    //filtrage sur colonne
+    double **im_dest = alloue_image_double(nl, nc);
+    for(int x = 0; x<nl; x++){
+        //printf("ligne [%i]\n", x);;
+        for(int y = 0; y<nc; y++){
+            //printf("calcul du point [%i, %i]\n", x, y);
+            //on fait la somme pour la convolution
             double res1 = 0;//la somme exterieur sur i
             for(int i = -N; i<=N; i++){
-                double res2 = 0;//la somme interieur sur j
-                for(int j = -N; j<=N; j++){
-                    res2 += tab_coef[1][(j<0)?(-j):j]*get_valeur(im_source, nl, nc, x+i, y+j);
-                }
-                res1 += res2*tab_coef[0][(i<0)?(-i):i];
+                res1 += tab_coef[0][abs(i)]*get_valeur(im_inter, nl, nc, x+i, y);
             }
             //fin de la somme, on sauvegarde dans l'image
             im_dest[x][y] = res1/(2*M_PI*sigma*sigma);
@@ -89,6 +102,8 @@ double** filt_separ(double** im_source, int nl, int nc, double sigma, int N){
     }
     //liberation de tab_coef
     liber_coef(tab_coef);
+    //liberation de l'image intermediaire
+    libere_image_double(im_inter);
     //return
     return im_dest;
 }
