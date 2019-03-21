@@ -46,9 +46,10 @@ int main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le no
     if (ac < 2) {printf("Usage : %s entree sortie \n",av[0]); exit(1); }
     /* Lecture d'une image pgm dont le nom est passe sur la ligne de commande */
     im1=lectureimagepgm(av[1],&nl,&nc);
+    unsigned char **filtre = filtrageGaussien(im1,nl,nc,2.5);
     if (im1==NULL)  { puts("Lecture image impossible"); exit(1); }
-    double** im2 = imuchar2double(im1, nl, nc);
-    double** im3 = imuchar2double(im1, nl, nc);
+    double** im2 = imuchar2double(filtre, nl, nc);
+    double** im3 = imuchar2double(filtre, nl, nc);
     double** filtre_x = filtre_prewit_x();
     double** filtre_y = filtre_prewit_y();
     double** Gx = convolution(im3, filtre_x, nl, nc, 3); 
