@@ -51,7 +51,7 @@
  \end{minipage}
 \end{figure}
 
-On effectue un filtrage gaussien sur les différentes images bruitées et on calcule le PSNR entre les images obtenues et l'image formes2b.pgm. Les courbes représentent donc le PSNR obtenue en fonction de $\sigma$, le paramètre gaussien. 
+On effectue un filtrage gaussien sur les différentes images bruitées et on calcule le PSNR entre les images obtenues et l'image formes2b.pgm. Les courbes représentent donc le PSNR obtenue en fonction de $\sigma$, le paramètre gaussien.
 
 Pour une image de type poisson et speekle, le niveau de bruit n'influe pas le résultat filtrer. La valeur de sigma n'est pas non plus importante. On a quand même un meilleur résultat pour un $\sigma$ entre 0.1 et 2. Le filtrage gaussien est plus efficace pour ces types de bruit que pour les deux autres.
 \newline
@@ -61,7 +61,7 @@ Dans tous les cas le PSNR entre l'image bruitée et filtrée décroit pour $\sig
 \begin{figure}[h]
  \begin{minipage}[b]{.46\linewidth}
   \includegraphics[scale=0.4]{radio1Time.png}
-  \caption{Temps radio1.pgm :\textcolor{blue}{\rule{0.5cm}{0.03cm}} filtrage Gaussien 
+  \caption{Temps radio1.pgm :\textcolor{blue}{\rule{0.5cm}{0.03cm}} filtrage Gaussien
 \textcolor{orange}{\rule{0.5cm}{0.03cm}} convolution spatiale}
  \end{minipage} \hfill
  \begin{minipage}[b]{.46\linewidth}
@@ -76,6 +76,28 @@ Dans tous les cas le PSNR entre l'image bruitée et filtrée décroit pour $\sig
 \caption{Temps radio1024.pgm \textcolor{blue}{
 \rule{0.5cm}{0.03cm}} filtrage Gaussien \textcolor{orange}{\rule{0.5cm}{0.03cm}}convolution spatiale}
 \end{figure}
+
+\section{Convolution spatiale}
+
+On effectue une convolution spatiale séparable, avec comme parametre la taille du masque, qu'on regle en general en fonction de sigma.
+On calcule l'EQM (ecart quadratique moyen) par rapport au filtre gaussien, la taille du masque est en proportion de sigma : N = W(\sigma) = a*\sigma :
+
+\begin{tabular}{| a || b | c | d | e | f |}
+    \hline
+    a/sigma & 1 & 2 & 5 & 10 & 20 \\
+    \hline
+    1 & 663.821296 & 1867.795812 & 2953.494399 & 3338.244053 & 3514.698997 \\
+    2 & 4.524510 & 28.070416 & 64.867759 & 82.120912 & 92.751862 \\
+    3 & 0.019195 & 0.075842 & 0.225751 & 0.317130 & 0.658155 \\
+    4 & 0.015186 & 0.018526 & 0.039034 & 0.055471 & 0.253320 \\
+    5 & 0.015185 & 0.018501 & 0.039079 & 0.055575 & 0.251062 \\
+    6 & 0.015185 & 0.018501 & 0.039081 & 0.055577 & 0.251043 \\
+    \hline
+ \end{tabular}
+
+
+On remarque que pour a=1, l'ecart est tres grand entre les deux filtres. Ce parametrage n'est pas adapte.
+On peut considerer que le filtre a convolution spatiale est proche du filtre gaussien a partir de a = 3.
 
 \section{Détection de contour}
 
@@ -106,7 +128,7 @@ On calcule le laplacien par convolution avec un masque et par détection des val
 \includegraphics[scale=0.4]{tangramlaplace.png}
 \end{figure}
 
-Les contours obtenus sont moins propre que par la méthode du gradient. Mais la recherche de contour par laplacien fonctionne à peu près sur les images bruitées : 
+Les contours obtenus sont moins propre que par la méthode du gradient. Mais la recherche de contour par laplacien fonctionne à peu près sur les images bruitées :
 
 
 \begin{figure}[h]
