@@ -12,7 +12,7 @@ def main():
     mon_fichier = open("resultTime.txt", "r")
 
     contenu = mon_fichier.read()
-    nbNombre = 398
+    nbNombre = 198
     sigma = np.zeros(nbNombre)
     result = np.zeros(nbNombre)
     result2 = np.zeros(nbNombre)
