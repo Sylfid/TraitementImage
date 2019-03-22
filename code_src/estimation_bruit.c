@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <float.h>
+#include "pgm.h"
 
 extern double** convolution(double**, double**, int, int, int);
 
@@ -69,16 +70,17 @@ double estimation_bruit(double **im, int nl, int nc, int t, double p){
     //on filtre l'image haut;
     double** masque = get_masque_passe_haut();
     double** image_filtre_haut = convolution(im, masque, nl, nc, 1);
+    //on libere le masque tout de suite
+    free(masque);
     //on calcule les ecarts types locals pour chaque pixels
     //on fait un tableau ou chaque indice represente le nombre d'ecart type
     //entre [indice*pas, indice*(pas+1)[
     int taille_tableau = 100;
     double pas = 1.0;
     int ecarts_types[taille_tableau];
-
     for(unsigned int i=0; i<nl; i++){
         for(unsigned int j=0; j<nc; j++){
-            double res = calc_ET_local(im, nl, nc, t, i, j);
+            double res = calc_ET_local(image_filtre_haut, nl, nc, t, i, j);
             int indice = (double) res/pas;
             if(indice > 100){
                 perror("erreur ecart type trop grand, se reporter a la fonction estimation_bruit");
@@ -95,5 +97,7 @@ double estimation_bruit(double **im, int nl, int nc, int t, double p){
         courant += ecarts_types[indice_courant];
         indice_courant++;
     }
+    //on libere l'image alloue par convolution
+    libere_image_double(image_filtre_haut);
     return (indice_courant-1)*pas;
 }
