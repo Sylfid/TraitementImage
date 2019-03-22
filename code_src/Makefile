@@ -7,6 +7,9 @@ essai1: essai1.o pgm.o
 essai2: essai2.o pgm.o fft.o
 	gcc $(LDFLAGS)  $^  -o $@
 
+test_estimation_bruit: test_estimation_bruit.o estimation_bruit.o pgm.o convolution.o
+	gcc $(LDFLAGS)  $^  -o $@
+
 clean:
 	rm -rf *.o
 

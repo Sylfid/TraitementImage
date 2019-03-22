@@ -4,8 +4,9 @@
 #include <math.h>
 #include <float.h>
 #include "pgm.h"
+#include "convolution.h"
 
-extern double** convolution(double**, double**, int, int, int);
+//extern double** convolution(double**, double**, int, int, int);
 
 /*
     obtient la valeur de l'image en x et y
@@ -75,14 +76,14 @@ double estimation_bruit(double **im, int nl, int nc, int t, double p){
     //on calcule les ecarts types locals pour chaque pixels
     //on fait un tableau ou chaque indice represente le nombre d'ecart type
     //entre [indice*pas, indice*(pas+1)[
-    int taille_tableau = 100;
-    double pas = 1.0;
+    int taille_tableau = 10000;
+    double pas = 0.01;
     int ecarts_types[taille_tableau];
     for(unsigned int i=0; i<nl; i++){
         for(unsigned int j=0; j<nc; j++){
             double res = calc_ET_local(image_filtre_haut, nl, nc, t, i, j);
             int indice = (double) res/pas;
-            if(indice > 100){
+            if(indice > taille_tableau){
                 perror("erreur ecart type trop grand, se reporter a la fonction estimation_bruit");
                 exit(0);
             }
@@ -99,5 +100,5 @@ double estimation_bruit(double **im, int nl, int nc, int t, double p){
     }
     //on libere l'image alloue par convolution
     libere_image_double(image_filtre_haut);
-    return (indice_courant-1)*pas;
+    return (indice_courant-1)*pas*1.13;
 }
