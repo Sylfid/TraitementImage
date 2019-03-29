@@ -72,6 +72,9 @@ double estimation_bruit(double **im, int nl, int nc, int t, double p){
     double** masque = get_masque_passe_haut();
     double** image_filtre_haut = convolution(im, masque, nl, nc, 1);
     //on libere le masque tout de suite
+    free(masque[0]);
+    free(masque[1]);
+    free(masque[2]);
     free(masque);
     //on calcule les ecarts types locals pour chaque pixels
     //on fait un tableau ou chaque indice represente le nombre d'ecart type
@@ -79,6 +82,11 @@ double estimation_bruit(double **im, int nl, int nc, int t, double p){
     int taille_tableau = 10000;
     double pas = 0.01;
     int ecarts_types[taille_tableau];
+    //initialisation de ecarts_types
+    for(unsigned int i=0; i<taille_tableau; i++){
+        ecarts_types[i] = 0;
+    }
+    //on compte dans l'histogramme
     for(unsigned int i=0; i<nl; i++){
         for(unsigned int j=0; j<nc; j++){
             double res = calc_ET_local(image_filtre_haut, nl, nc, t, i, j);
