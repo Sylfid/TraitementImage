@@ -3,7 +3,7 @@
 #include "pgm.h"
 #define M_PI 3.14159265358979323846
 
-double ** filtre_laplacien(){
+double ** filtre_laplacien(){ //Création du masque permettant d'obtenir le laplacien
     
     double** filtre = alloue_image_double(3,3);
     filtre[1][0]=1.;
@@ -26,10 +26,13 @@ int main (int ac, char **av) {
     /* Lecture d'une image pgm dont le nom est passe sur la ligne de commande */
     im1=lectureimagepgm(av[1],&nl,&nc);
     if (im1==NULL)  { puts("Lecture image impossible"); exit(1); }
+    /*Application d'un filtre gaussien*/
     unsigned char **imfiltre = filtrageGaussien(im1,nl,nc,3.2);
     double** im3 = imuchar2double(imfiltre, nl, nc);
     double** filtre_lap = filtre_laplacien();
+    //Obtention du laplacien
     double** laplace = convolution(im3, filtre_lap, nl, nc, 3); 
+    //Recherche des x,y pour lesquel le laplacien s'annule
     for(int i=0; i<nl-1; i++){
         for(int j=0; j<nc-1; j++){
             if(laplace[i][j]*laplace[i][j+1]<=0 || 

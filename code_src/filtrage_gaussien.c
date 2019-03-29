@@ -81,7 +81,7 @@ void multiplication (double** entreReel1, double** entreImag1,
     }
 }
 
-double psnr_maison(unsigned char** im1, unsigned char** im2, int nl, int nc){
+double psnr_maison(unsigned char** im1, unsigned char** im2, int nl, int nc){ //Calcul du PSNR de deux images
     double result = 0.0;
     double** im1d=imuchar2double(im1,nl,nc), **im2d=imuchar2double(im2, nl, nc);
     for(int i=0; i<nl; i++){
@@ -95,7 +95,7 @@ double psnr_maison(unsigned char** im1, unsigned char** im2, int nl, int nc){
     return result;
 
 }
-
+//Calcul le PSNR entre im2 et im1 filtré par filtre gaussien
 double psnr_gaussien(unsigned char** im1,unsigned char** im2, int nl, int nc, float sigma){
     unsigned char ** tampon = filtrageGaussien(im1, nl, nc, sigma);
     double result = psnr_maison(im2, tampon, nl, nc);
@@ -123,7 +123,7 @@ void filtrage_write(char* filename_source, char* filename_dest, double sigma){
     libere_image(im_dest_char);
 }
 
-double** convolution(double** image, double** filtre, int nl, int nc, int n){
+double** convolution(double** image, double** filtre, int nl, int nc, int n){ //Calcul la convolution entre deux images
 
     double** tampon = alloue_image_double(nl,nc);
     double somme=0;
