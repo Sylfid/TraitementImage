@@ -30,13 +30,13 @@ int maxImage(double** image, int nl, int nc){
     int max = (int) image[0][0];
     for(int i=0; i<nl; i++){
         for(int j=0; j<nc; j++){
-            if(max < (int) image[i][j]){max = image[i][j];}
+            if(max < (int) image[i][j]){max =(int) image[i][j];}
         }
     }
     return max;
 }
 
-int calculMedian(int* tableau, int tailleTableau, int nbElem){
+int calculMedian(int* tableau, int nbElem){
     int somme = 0;
     int i=0;
     while(somme < nbElem/2 + 1){
@@ -67,34 +67,65 @@ void enleveValeurHist(int* hist, int taille, int valeur){
     hist[valeur] = hist[valeur]-1;
 }
 
+void reinitialisationHist(int* hist, int taille, double** image, int nl, int nc, int tailleMasque, int i){
+    for(int j=0; j<taille; j++){
+        hist[j]=0;
+    }
+    if(i-tailleMasque < 0 || i+tailleMasque >= nl){
+        printf("Erreur reinitialisationHist");
+        exit(0);
+    }
+    int n = 2*tailleMasque + 1;
+    for(int p=0; p<n; p++){
+        for(int k=0; k<n; k++){
+            hist[(int) image[i-tailleMasque+p][k]] += 1;
+        }
+    }
+}
+
+void etapeSuivanteMedian(int* hist, int taille, double** image, int nl, int nc, int i, int j, int tailleMasque){
+    int n = 2*tailleMasque +1;
+    if(i-tailleMasque < 0 || i + tailleMasque >=nl || j-tailleMasque-1<0 || j+tailleMasque>=nc){
+        printf("Erreur etapeSuivanteMedian");
+        exit(0);
+    }
+    for(int k=0; k<n; k++){
+        enleveValeurHist(hist, taille, (int)image[i-tailleMasque+k][j-tailleMasque-1]);
+        ajoutValeurHist(hist, taille, (int)image[i-tailleMasque+k][j+tailleMasque]);
+    }
+}
 
 double** filtreMedian(double** imageBruite, int nl, int nc, int tailleMasque){
     int n = 2*tailleMasque +1;
     int max = maxImage(imageBruite,nl,nc);
+    max ++;
     int *hist = malloc(max*sizeof(int));
     for(int i=0; i<max; i++){
         hist[i]=0;
     }
     double** imageResult = alloue_image_double(nl,nc);
     for(int i= tailleMasque; i< nl - tailleMasque; i++){
-        mediane = calculMedian(imageBruite, nl, nc, tailleMasque, i, tailleMasque);
-        imageResult[i][tailleMasque] = mediane;
+        reinitialisationHist(hist, max, imageBruite, nl, nc, tailleMasque, i);
+        imageResult[i][tailleMasque] = calculMedian(hist, n*n);
         for(int j=tailleMasque+1; j< nc-tailleMasque; j++){
-            imageResult[i][j] = calculMedian(imageBruite, nl, nc, tailleMasque, i, j);
+            etapeSuivanteMedian(hist, max, imageBruite, nl, nc, i, j, tailleMasque);
+            imageResult[i][j]=calculMedian(hist,n*n);
         }
     } 
+    return imageResult;
 }
 
 
 int main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du resultat . */
-    int* test = malloc(5*sizeof(int));
-    for(int i=0; i<15; i++){
-        test[i]=1;
-    }
-    printf("%d", calculMedian(test, 5, 15));
+    int nl, nc;
+    unsigned char **im1;
+    im1=lectureimagepgm(av[1],&nl,&nc);
+    double**im2=imuchar2double(im1,nl,nc);
+    double** im3 = filtreMedian(im2, nl, nc, 3);
+    libere_image(im1);
+    libere_image_double(im2);
+    libere_image_double(im3);
     return 0;
 }
 
 
-
-Si t'as oublié : faire une méthode créer hist et l'appeler dans la premier boucle de filtre Median
