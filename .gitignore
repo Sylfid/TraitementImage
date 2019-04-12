@@ -1,0 +1,12 @@
+*.o
+*.gch
+code_src/MesureTemps
+.gitignore
+*.pgm
+code_src/filtrageGaussien
+code_src/filtrage_gaussien
+code_src/main_conv_spat
+code_src/essai1
+code_src/essai2
+
+
