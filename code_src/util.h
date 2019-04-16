@@ -8,4 +8,6 @@
 */
 double get_valeur(double** image, int nl, int nc, int x, int y);
 
+double EQM_maison(double** r1, double** r2, int nl, int nc);
+
 #endif

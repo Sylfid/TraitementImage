@@ -27,3 +27,13 @@ double get_valeur(double** image, int nl, int nc, int x, int y){
     //on retourne le point, prolonge ou non
     return image[x_f][y_f];
 }
+
+double EQM_maison(double** r1, double** r2, int nl, int nc){
+    double result = 0;
+    for(int i=0; i<nl; i++){
+        for(int j=0; j<nc; j++){
+            result += (r1[i][j]-r2[i][j])*(r1[i][j]-r2[i][j]);
+        }
+    }
+    return result/(nl*nc);
+}
