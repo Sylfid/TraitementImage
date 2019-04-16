@@ -13,6 +13,10 @@ test_estimation_bruit: test_estimation_bruit.o estimation_bruit.o pgm.o convolut
 test_bilateral:test_bilateral.o filtre_bilateral.o pgm.o convolution.o util.o divers.o estimation_bruit.o
 	gcc $(LDFLAGS)  $^  -o $@
 
+test_NL_means:test_NL_means.o filtre_NL_means.o pgm.o convolution.o util.o divers.o estimation_bruit.o
+	gcc $(LDFLAGS)  $^  -o $@
+
+
 clean:
 	rm -rf *.o
 
