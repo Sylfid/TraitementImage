@@ -31,9 +31,10 @@ double calcul_pixel_filtre(double** image, int nl, int nc, int x, int y){
         double somme2 =0;
         for(int i=-1; i<2; i++){
             for(int j=-1; j<2; j++){
-                somme2 += calcul_w(image, nl, nc, x+i, y+j);
-                somme += calcul_w(image, nl, nc, x+i, y+j) * 
-                    image[x+i][y+j];
+                printf("%d", i);
+                w = calcul_w(image, nl, nc, x+i, y+j);
+                somme2 += w;
+                somme += w * image[x+i][y+j];
             }
         }
         return somme/somme2;
