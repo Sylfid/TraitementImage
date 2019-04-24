@@ -1,4 +1,6 @@
 *.o
+*.log
+*.png
 *.gch
 code_src/MesureTemps
 .gitignore
