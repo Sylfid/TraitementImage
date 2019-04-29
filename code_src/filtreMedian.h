@@ -111,21 +111,6 @@ double** filtreMedian(double** imageBruite, int nl, int nc, int tailleMasque){
             etapeSuivanteMedian(hist, max, imageBruite, nl, nc, i, j, tailleMasque);
             imageResult[i][j]=calculMedian(hist,n*n);
         }
-    } 
+    }
     return imageResult;
 }
-
-
-int main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du resultat . */
-    int nl, nc;
-    unsigned char **im1;
-    im1=lectureimagepgm(av[1],&nl,&nc);
-    double**im2=imuchar2double(im1,nl,nc);
-    double** im3 = filtreMedian(im2, nl, nc, 3);
-    libere_image(im1);
-    libere_image_double(im2);
-    libere_image_double(im3);
-    return 0;
-}
-
-
