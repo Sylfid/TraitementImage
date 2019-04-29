@@ -7,9 +7,52 @@
 #include "util.h"
 
 double choisi_h(double sigma){
-    return 0.4*sigma;
+    double h;
+    if(sigma<=15){
+        h = 0.4*sigma;
+    } else if(sigma<=30){
+        h = 0.4*sigma;
+    } else if(sigma<=45){
+        h = 0.35*sigma;
+    } else if(sigma<=45){
+        h = 0.35*sigma;
+    } else {//if(sigma<=45){
+        h = 0.35*sigma;
+    }
+    return h;
 }
 
+int choisir_patch(double sigma){
+    int patch;
+    if(sigma<=15){
+        patch = 3;
+    } else if(sigma<=30){
+        patch = 5;
+    } else if(sigma<=45){
+        patch = 7;
+    } else if(sigma<=45){
+        patch = 9;
+    } else {//if(sigma<=45){
+        patch = 11;
+    }
+    return patch;
+}
+
+int choisir_region(double sigma){
+    int region;
+    if(sigma<=15){
+        region = 21;
+    } else if(sigma<=30){
+        region = 21;
+    } else if(sigma<=45){
+        region = 35;
+    } else if(sigma<=45){
+        region = 35;
+    } else {//if(sigma<=45){
+        region = 35;
+    }
+    return region;
+}
 
 double** filtre_NL_means(double** imageBruite,
                         int nl,
@@ -53,8 +96,16 @@ double** filtre_NL_means(double** imageBruite,
                 }
             }
             imSortie[gx][gy] = num/den;
-            printf("j'ai calcule %i %i\n", gx, gy);
+            //printf("j'ai calcule %i %i\n", gx, gy);
         }
     }
     return imSortie;
+}
+
+double **filtre_NL_means_auto(double** imageBruite,
+                        int nl,
+                        int nc,
+                        double sigma)
+{
+    return filtre_NL_means(imageBruite, nl, nc, choisir_region(sigma), choisir_patch(sigma), sigma);
 }

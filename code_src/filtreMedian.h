@@ -111,7 +111,7 @@ double** filtreMedian(double** imageBruite, int nl, int nc, int tailleMasque){
             etapeSuivanteMedian(hist, max, imageBruite, nl, nc, i, j, tailleMasque);
             imageResult[i][j]=calculMedian(hist,n*n);
         }
-    }
+    } 
     return imageResult;
 }
 
@@ -127,3 +127,5 @@ int main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le no
     libere_image_double(im3);
     return 0;
 }
+
+
