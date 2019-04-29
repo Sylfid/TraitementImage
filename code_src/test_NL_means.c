@@ -5,7 +5,7 @@
 
 int main(){
     int nl,nc;
-    unsigned char **im_source_char = lectureimagepgm("../imagestp/formes2bb20.pgm",&nl,&nc);
+    unsigned char **im_source_char = lectureimagepgm("../imagestp/formes2bb10.pgm",&nl,&nc);
     //sous forme de double
     double **im_source_double = imuchar2double(im_source_char, nl, nc);
 
@@ -13,11 +13,11 @@ int main(){
     double ** im_non_bruite_double = imuchar2double(im_non_bruite_char, nl, nc);
 
     //
-    double bruit_reel = 20;
+    double bruit_reel = 10;
     double bruit_estime = estimation_bruit(im_source_double, nl, nc, 10, 0.005);
 
     //test du filtre
-    double **im_dest_double = filtre_NL_means(im_source_double, nl, nc, 21, 5, 20);
+    double **im_dest_double = filtre_NL_means(im_source_double, nl, nc, 21, 3, bruit_reel);
     //on recupere l'image en char
     unsigned char **im_dest_char = imdouble2uchar(im_dest_double, nl, nc);
     //on l'affiche dans cette image test
