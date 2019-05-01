@@ -11,7 +11,7 @@ def main():
     mon_fichier = open("resultPSNR.txt", "r")
 
     contenu = mon_fichier.read()
-    nbNombre = 27
+    nbNombre = 9
     sigma = np.zeros(nbNombre)
     result = np.zeros(nbNombre)
     result2 = np.zeros(nbNombre)

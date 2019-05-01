@@ -60,7 +60,7 @@ void enleveValeurHist(int* hist, int taille, int valeur){
         printf("Erreur ajoutValeurHist");
         exit(0);
     }
-    if(valeur == 0){
+    if(hist[valeur] == 0){
         printf("Imposible d'enlever la valeur");
         exit(0);
     }
@@ -112,18 +112,34 @@ double** filtreMedian(double** imageBruite, int nl, int nc, int tailleMasque){
             imageResult[i][j]=calculMedian(hist,n*n);
         }
     }
+    free(hist);
     return imageResult;
 }
 
+double calcul_psnr_median(double **image1, double **image2, int nl, int nc, int taille){
+    double** image_filtre = filtreMedian(image2, nl, nc, taille);
+    double result = psnr_double(image1, image_filtre, nl, nc);
+    libere_image_double(image_filtre);
+    return result;
+}
 
-int main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le nom du resultat . */
+int main (int ac, char **av) {  
     int nl, nc;
-    unsigned char **im1;
+    unsigned char **im1, **im4, **im3;
     im1=lectureimagepgm(av[1],&nl,&nc);
+    im4 = lectureimagepgm(av[2],&nl,&nc);
+    im3 = lectureimagepgm(av[3],&nl,&nc);
     double**im2=imuchar2double(im1,nl,nc);
-    double** im3 = filtreMedian(im2, nl, nc, 3);
+    double**im5=imuchar2double(im4,nl,nc);
+    double**im6=imuchar2double(im3,nl,nc);
+    printf("%f\n", calcul_psnr_median(im2, im5, nl, nc, 0));
+    printf("%f\n", psnr_double(im2, im5, nl, nc));
+    printf("%f\n", psnr_double(im2, im6, nl, nc));
     libere_image(im1);
+    libere_image(im4);
+    libere_image(im3);
     libere_image_double(im2);
-    libere_image_double(im3);
+    libere_image_double(im5);
+    libere_image_double(im6);
     return 0;
 }
