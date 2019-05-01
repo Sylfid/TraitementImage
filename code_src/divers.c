@@ -13,6 +13,9 @@ double psnr(unsigned char **im1, unsigned char **im2,  int nl, int nc) { double 
   return ( 10. * log10(255*255/x)) ;
 }
 
+
+
+
 double psnr_double(double** im1, double** im2,  int nl, int nc) { double x;
   int i,j;
   for (x=i=0; i<nl; i++) for (j=0; j<nc; j++) x+=((int)im1[i][j]-im2[i][j])*((int)im1[i][j]-im2[i][j]);

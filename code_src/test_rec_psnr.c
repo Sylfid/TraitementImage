@@ -20,16 +20,25 @@ int main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le no
     im4=lectureimagepgm(av[4],&nl,&nc);
     double** im_fort_bruit = imuchar2double(im4,nl,nc);
 
+    if(im1==NULL || im2== NULL || im3==NULL || im4==NULL){
+    printf("Lecture image impossible");
+    exit(0);
+    }
+
     double step = 0.5;
-    double seuilMax = 100.;
+    double seuilMax = 20.;
 
     FILE* fichier = NULL;
     fichier = fopen("resultPSNR.txt", "r+");
+    if(fichier == NULL){
+    exit(0);
+    }
 
+    double result_fort=0., result_faible=0., result_moyen=0.;
     for(double i = 5.0; i<seuilMax; i+=step){
-        double result_faible = calcul_PSNR_filtre_rec(imref, im_faible_bruit, nl, nc, 500, i);
-        double result_moyen = calcul_PSNR_filtre_rec(imref, im_moyen_bruit, nl, nc, 500, i);
-        double result_fort = calcul_PSNR_filtre_rec(imref, im_fort_bruit, nl, nc, 500, i);
+        result_faible = calcul_PSNR_filtre_rec(imref, im_faible_bruit, nl, nc, 300, i);
+        result_moyen = calcul_PSNR_filtre_rec(imref, im_moyen_bruit, nl, nc, 300, i);
+        result_fort = calcul_PSNR_filtre_rec(imref, im_fort_bruit, nl, nc, 300, i);
         fprintf(fichier, "%f %f %f %f\n", i, result_faible, result_moyen, result_fort);
     }
 
@@ -44,4 +53,3 @@ int main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le no
     libere_image_double(im_fort_bruit);
     return 0;
 }
-
