@@ -123,7 +123,7 @@ double calcul_psnr_median(double **image1, double **image2, int nl, int nc, int 
     return result;
 }
 
-int main (int ac, char **av) {  
+/*int main (int ac, char **av) {  
     int nl, nc;
     unsigned char **im1, **im4, **im3;
     im1=lectureimagepgm(av[1],&nl,&nc);
@@ -142,4 +142,4 @@ int main (int ac, char **av) {
     libere_image_double(im5);
     libere_image_double(im6);
     return 0;
-}
+}*/
