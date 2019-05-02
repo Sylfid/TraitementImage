@@ -1,33 +1,7 @@
 #include "pgm.h"
 #include <math.h>
 
-#define abs(x) (x>=0)?x:-x
 
-
-double calc_coef(int i, double sigma){
-    return exp(-(i*i)/(2*sigma*sigma));;
-}
-
-/*
-    precalcul tout les coefficients en exp et le met dans un double** alloue
-    ce double** comprend deux tableaux, un de taille nl+1 et l'autre de taille nc+1
-    Si i ou j est negatif, utilise -i/-j pour avoir acces au tableau
-*/
-double** make_coef(int nl, int nc, double sigma){
-    //on va faire simple et creer une image de double
-    double** tab = malloc(2*sizeof(double*));
-    //calcul des elements pour i
-    tab[0] = malloc((nl+1)*sizeof(double));
-    for(int i=0; i<=nl; i++){
-        tab[0][i] = calc_coef(i, sigma);
-    }
-    //calcul des elements pour j
-    tab[1] = malloc((nc+1)*sizeof(double));
-    for(int j=0; j<=nc; j++){
-        tab[1][j] = calc_coef(j, sigma);
-    }
-    return tab;
-}
 
 void liber_coef(double**tab){
     free(tab[0]);

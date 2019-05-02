@@ -8,10 +8,10 @@ import matplotlib.pyplot as plt
 
 def main():
 
-    mon_fichier = open("resultPSNR.txt", "r")
+    mon_fichier = open("resultBilateralP.txt", "r")
 
     contenu = mon_fichier.read()
-    nbNombre = 9
+    nbNombre = 11
     sigma = np.zeros(nbNombre)
     result = np.zeros(nbNombre)
     result2 = np.zeros(nbNombre)
@@ -74,4 +74,3 @@ def main():
 
 if __name__ == '__main__':
     main()                     # main function keeps variables locally scoped
-

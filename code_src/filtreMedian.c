@@ -122,24 +122,24 @@ double calcul_psnr_median(double **image1, double **image2, int nl, int nc, int 
     libere_image_double(image_filtre);
     return result;
 }
-
-int main (int ac, char **av) {  
-    int nl, nc;
-    unsigned char **im1, **im4, **im3;
-    im1=lectureimagepgm(av[1],&nl,&nc);
-    im4 = lectureimagepgm(av[2],&nl,&nc);
-    im3 = lectureimagepgm(av[3],&nl,&nc);
-    double**im2=imuchar2double(im1,nl,nc);
-    double**im5=imuchar2double(im4,nl,nc);
-    double**im6=imuchar2double(im3,nl,nc);
-    printf("%f\n", calcul_psnr_median(im2, im5, nl, nc, 0));
-    printf("%f\n", psnr_double(im2, im5, nl, nc));
-    printf("%f\n", psnr_double(im2, im6, nl, nc));
-    libere_image(im1);
-    libere_image(im4);
-    libere_image(im3);
-    libere_image_double(im2);
-    libere_image_double(im5);
-    libere_image_double(im6);
-    return 0;
-}
+// 
+// int main (int ac, char **av) {
+//     int nl, nc;
+//     unsigned char **im1, **im4, **im3;
+//     im1=lectureimagepgm(av[1],&nl,&nc);
+//     im4 = lectureimagepgm(av[2],&nl,&nc);
+//     im3 = lectureimagepgm(av[3],&nl,&nc);
+//     double**im2=imuchar2double(im1,nl,nc);
+//     double**im5=imuchar2double(im4,nl,nc);
+//     double**im6=imuchar2double(im3,nl,nc);
+//     printf("%f\n", calcul_psnr_median(im2, im5, nl, nc, 0));
+//     printf("%f\n", psnr_double(im2, im5, nl, nc));
+//     printf("%f\n", psnr_double(im2, im6, nl, nc));
+//     libere_image(im1);
+//     libere_image(im4);
+//     libere_image(im3);
+//     libere_image_double(im2);
+//     libere_image_double(im5);
+//     libere_image_double(im6);
+//     return 0;
+// }

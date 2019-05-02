@@ -8,81 +8,85 @@
 
 //les fichiers voulu
 //bruit blanc
-#define NB_IMAGE_BB 15
+#define NB_IMAGE_BB 4 //15
 static const int ecart_type_real_BB[NB_IMAGE_BB] = {
-    0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70
+    //0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70
+    5, 20, 40, 60
 };
 static char* IMAGE_BB[NB_IMAGE_BB] = {
-    "../imagestp/formes2.pgm",
+    //"../imagestp/formes2.pgm",
     "../imagestp/formes2bb5.pgm",
-    "../imagestp/formes2bb10.pgm",
-    "../imagestp/formes2bb15.pgm",
+    //"../imagestp/formes2bb10.pgm",
+    //"../imagestp/formes2bb15.pgm",
     "../imagestp/formes2bb20.pgm",
-    "../imagestp/formes2bb25.pgm",
-    "../imagestp/formes2bb30.pgm",
-    "../imagestp/formes2bb35.pgm",
+    //"../imagestp/formes2bb25.pgm",
+    //"../imagestp/formes2bb30.pgm",
+    //"../imagestp/formes2bb35.pgm",
     "../imagestp/formes2bb40.pgm",
-    "../imagestp/formes2bb45.pgm",
-    "../imagestp/formes2bb50.pgm",
-    "../imagestp/formes2bb55.pgm",
+    //"../imagestp/formes2bb45.pgm",
+    //"../imagestp/formes2bb50.pgm",
+    //"../imagestp/formes2bb55.pgm",
     "../imagestp/formes2bb60.pgm",
-    "../imagestp/formes2bb65.pgm",
-    "../imagestp/formes2bb70.pgm"
+    //"../imagestp/formes2bb65.pgm",
+    //"../imagestp/formes2bb70.pgm"
 };
 //bruit speckle
-#define NB_IMAGE_S 15
+#define NB_IMAGE_S 4 //15
 static const int ecart_type_real_S[NB_IMAGE_S] = {
-    0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70
+    //0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70
+    5, 20, 40, 60
 };
 static char* IMAGE_S[NB_IMAGE_S] = {
-    "../imagestp/formes2.pgm",
+    //"../imagestp/formes2.pgm",
     "../imagestp/formes2s5.pgm",
-    "../imagestp/formes2s10.pgm",
-    "../imagestp/formes2s15.pgm",
+    //"../imagestp/formes2s10.pgm",
+    //"../imagestp/formes2s15.pgm",
     "../imagestp/formes2s20.pgm",
-    "../imagestp/formes2s25.pgm",
-    "../imagestp/formes2s30.pgm",
-    "../imagestp/formes2s35.pgm",
+    //"../imagestp/formes2s25.pgm",
+    //"../imagestp/formes2s30.pgm",
+    //"../imagestp/formes2s35.pgm",
     "../imagestp/formes2s40.pgm",
-    "../imagestp/formes2s45.pgm",
-    "../imagestp/formes2s50.pgm",
-    "../imagestp/formes2s55.pgm",
+    //"../imagestp/formes2s45.pgm",
+    //"../imagestp/formes2s50.pgm",
+    //"../imagestp/formes2s55.pgm",
     "../imagestp/formes2s60.pgm",
-    "../imagestp/formes2s65.pgm",
-    "../imagestp/formes2s70.pgm"
+    //"../imagestp/formes2s65.pgm",
+    //"../imagestp/formes2s70.pgm"
 };
 //bruit poisson
-#define NB_IMAGE_P 6
+#define NB_IMAGE_P 3 //6
 static const int ecart_type_real_P[NB_IMAGE_P] = {
-    0, 1, 2, 3, 4, 5
+    //0, 1, 2, 3, 4, 5
+    1, 3, 5
 };
 static char* IMAGE_P[NB_IMAGE_P] = {
-    "../imagestp/formes2.pgm",
+    //"../imagestp/formes2.pgm",
     "../imagestp/formes2p1.pgm",
-    "../imagestp/formes2p2.pgm",
+    //"../imagestp/formes2p2.pgm",
     "../imagestp/formes2p3.pgm",
-    "../imagestp/formes2p4.pgm",
+    //"../imagestp/formes2p4.pgm",
     "../imagestp/formes2p5.pgm"
 };
 //bruit proivre et sel
-#define NB_IMAGE_SP 14
+#define NB_IMAGE_SP 5 //14
 static const int ecart_type_real_SP[NB_IMAGE_SP] = {
-    0, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29
+    //0, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29
+    5, 11, 17, 23, 29
 };
 static char* IMAGE_SP[NB_IMAGE_SP] = {
-    "../imagestp/formes2.pgm",
+    //"../imagestp/formes2.pgm",
     "../imagestp/formes2sp5.pgm",
-    "../imagestp/formes2sp7.pgm",
-    "../imagestp/formes2sp9.pgm",
+    //"../imagestp/formes2sp7.pgm",
+    //"../imagestp/formes2sp9.pgm",
     "../imagestp/formes2sp11.pgm",
-    "../imagestp/formes2sp13.pgm",
-    "../imagestp/formes2sp15.pgm",
+    //"../imagestp/formes2sp13.pgm",
+    //"../imagestp/formes2sp15.pgm",
     "../imagestp/formes2sp17.pgm",
-    "../imagestp/formes2sp19.pgm",
-    "../imagestp/formes2sp21.pgm",
+    //"../imagestp/formes2sp19.pgm",
+    //"../imagestp/formes2sp21.pgm",
     "../imagestp/formes2sp23.pgm",
-    "../imagestp/formes2sp25.pgm",
-    "../imagestp/formes2sp27.pgm",
+    //"../imagestp/formes2sp25.pgm",
+    //"../imagestp/formes2sp27.pgm",
     "../imagestp/formes2sp29.pgm"
 };
 

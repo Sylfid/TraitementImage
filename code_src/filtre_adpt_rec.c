@@ -5,17 +5,17 @@
 
 
 double calcul_w(double** image, int nl, int nc, int x, int y, double seuil){
-    double resultat = get_valeur(image, nl, nc, x+1, y) - get_valeur(image, 
-            nl, nc, x-1, y); 
+    double resultat = get_valeur(image, nl, nc, x+1, y) - get_valeur(image,
+            nl, nc, x-1, y);
     resultat = resultat * resultat;
-    double resultat2 = get_valeur(image, nl, nc, x, y+1) - get_valeur(image, 
+    double resultat2 = get_valeur(image, nl, nc, x, y+1) - get_valeur(image,
             nl, nc, x, y-1);
     resultat2 = resultat2 * resultat2;
     resultat = (resultat + resultat2)/(2*seuil*seuil);
     resultat = exp(-resultat);
     return resultat;
 }
-    
+
 
 double** copie_image(double** image, int nl, int nc){
     double** result = alloue_image_double(nl,nc);
@@ -76,18 +76,18 @@ double calcul_PSNR_filtre_rec(double** imageIni, double** image, int nl, int nc,
 
 }
 
-
-int main (int ac, char **av) {  
-    int nl, nc;
-    unsigned char **im1;
-    im1=lectureimagepgm(av[1],&nl,&nc);
-    double**im2=imuchar2double(im1,nl,nc);
-    double** im3 = filtre_adaptatif_recursif(im2, nl, nc, 300, 22.);
-    unsigned char **im4 = imdouble2char(im3, nl, nc);
-    ecritureimagepgm(av[2],im4,nl,nc);
-    libere_image(im1);
-    libere_image(im4);
-    libere_image_double(im2);
-    libere_image_double(im3);
-    return 0;
-}
+// 
+// int main (int ac, char **av) {
+//     int nl, nc;
+//     unsigned char **im1;
+//     im1=lectureimagepgm(av[1],&nl,&nc);
+//     double**im2=imuchar2double(im1,nl,nc);
+//     double** im3 = filtre_adaptatif_recursif(im2, nl, nc, 300, 22.);
+//     unsigned char **im4 = imdouble2char(im3, nl, nc);
+//     ecritureimagepgm(av[2],im4,nl,nc);
+//     libere_image(im1);
+//     libere_image(im4);
+//     libere_image_double(im2);
+//     libere_image_double(im3);
+//     return 0;
+// }
