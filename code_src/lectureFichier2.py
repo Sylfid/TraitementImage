@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 def main():
 
-    mon_fichier = open("resultBilateralP.txt", "r")
+    mon_fichier = open("resultBilateralSP.txt", "r")
 
     contenu = mon_fichier.read()
     nbNombre = 11
@@ -42,26 +42,28 @@ def main():
                 result[enter] = float(i)+ 10.*result[enter]
 
             if space == 1 and point > 1 and carSpe == 0:
-                result[enter] = result[enter]+float(i)*(10.**(-point))
+                result[enter] = result[enter]+float(i)*(10.**(-(point-1)))
 
             if space == 2 and point == 0 and carSpe == 0:
                 result2[enter] = float(i)+ 10.*result2[enter]
 
             if space == 2 and point > 1 and carSpe == 0:
-                result2[enter] = result2[enter]+float(i)*(10.**(-point))
+                result2[enter] = result2[enter]+float(i)*(10.**(-(point-1)))
 
             if space == 3 and point == 0 and carSpe == 0:
                 result3[enter] = float(i)+ 10.*result3[enter]
 
             if space == 3 and point > 1 and carSpe == 0:
-                result3[enter] = result3[enter]+float(i)*(10.**(-point))
+                result3[enter] = result3[enter]+float(i)*(10.**(-point+1))
 
             if space == 0 and point == 0 and carSpe == 0:
                 sigma[enter] = float(i)+ 10.*sigma[enter]
 
             if space == 0 and point > 1 and carSpe == 0:
-                sigma[enter] = sigma[enter]+ float(i)*(10.**(-point))
+                sigma[enter] = sigma[enter]+ float(i)*(10.**(-point+1))
 
+
+    print(result3[9])
     plt.plot(sigma, result, sigma, result2, sigma, result3)
     plt.show()
 

@@ -6,17 +6,17 @@
 int main(){
     int nl,nc;
     //image bruit faible
-    unsigned char **im_source_char1 = lectureimagepgm("../imagestp/formes2p1.pgm",&nl,&nc);
+    unsigned char **im_source_char1 = lectureimagepgm("../imagestp/formes2sp9.pgm",&nl,&nc);
     //sous forme de double
     double **im_source_double1 = imuchar2double(im_source_char1, nl, nc);
 
     //image bruit moyen
-    unsigned char **im_source_char2 = lectureimagepgm("../imagestp/formes2p3.pgm",&nl,&nc);
+    unsigned char **im_source_char2 = lectureimagepgm("../imagestp/formes2sp17.pgm",&nl,&nc);
     //sous forme de double
     double **im_source_double2 = imuchar2double(im_source_char2, nl, nc);
 
     //image bruit fort
-    unsigned char **im_source_char3 = lectureimagepgm("../imagestp/formes2p5.pgm",&nl,&nc);
+    unsigned char **im_source_char3 = lectureimagepgm("../imagestp/formes2sp25.pgm",&nl,&nc);
     //sous forme de double
     double **im_source_double3 = imuchar2double(im_source_char3, nl, nc);
 
@@ -24,13 +24,13 @@ int main(){
     double ** im_non_bruite_double = imuchar2double(im_non_bruite_char, nl, nc);
 
     //
-    double bruit_reel1 = 1;
-    double bruit_reel2 = 3;
-    double bruit_reel3 = 5;
+    double bruit_reel1 = 9;
+    double bruit_reel2 = 17;
+    double bruit_reel3 = 25;
     //double bruit_estime = estimation_bruit(im_source_double, nl, nc, 10, 0.005);
 
     //fichier d'ecriture des resultats
-    FILE* fichier = fopen("resultBilateralP.txt", "w+");
+    FILE* fichier = fopen("resultBilateralSP.txt", "w+");
 
     double psnrbase1 = psnr_double(im_source_double1, im_non_bruite_double, nl, nc);
     double psnrbase2 = psnr_double(im_source_double2, im_non_bruite_double, nl, nc);

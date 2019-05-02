@@ -122,7 +122,7 @@ double calcul_psnr_median(double **image1, double **image2, int nl, int nc, int 
     libere_image_double(image_filtre);
     return result;
 }
-// 
+//
 // int main (int ac, char **av) {
 //     int nl, nc;
 //     unsigned char **im1, **im4, **im3;

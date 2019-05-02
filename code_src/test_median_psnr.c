@@ -34,11 +34,24 @@ int main (int ac, char **av) {  /* av[1] contient le nom de l'image, av[2] le no
     }
 
     double result_fort=0., result_faible=0., result_moyen=0.;
+    clock_t  debut ,  fin, debut2, fin2, debut3, fin3;
+    double temps1, temps2, temps3;
     for(int i = 0; i<seuilMax; i++){
+        debut=clock();
         result_faible = calcul_psnr_median(imref, im_faible_bruit, nl, nc, i);
+        fin = clock();
+        temps1 = ((double) fin - (double) debut)/CLOCKS_PER_SEC;
+
+        debut2 = clock();
         result_moyen = calcul_psnr_median(imref, im_moyen_bruit, nl, nc, i);
+        fin2 = clock();
+        temps2 = ((double) fin2 - (double) debut2)/CLOCKS_PER_SEC;
+
+        debut3 = clock();
         result_fort = calcul_psnr_median(imref, im_fort_bruit, nl, nc, i);
-        fprintf(fichier, "%d %f %f %f\n", i, result_faible, result_moyen, result_fort);
+        fin3 = clock();
+        temps3 = ((double) fin3 - (double) debut3)/CLOCKS_PER_SEC;
+        fprintf(fichier, "%d %f %f %f\n", i, temps1, temps2, temps3);
     }
 
 

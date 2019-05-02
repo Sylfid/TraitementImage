@@ -76,7 +76,7 @@ double calcul_PSNR_filtre_rec(double** imageIni, double** image, int nl, int nc,
 
 }
 
-// 
+//
 // int main (int ac, char **av) {
 //     int nl, nc;
 //     unsigned char **im1;
