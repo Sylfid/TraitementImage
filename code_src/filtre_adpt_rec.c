@@ -77,7 +77,7 @@ double calcul_PSNR_filtre_rec(double** imageIni, double** image, int nl, int nc,
 }
 
 
-int main (int ac, char **av) {  
+/*int main (int ac, char **av) {  
     int nl, nc;
     unsigned char **im1;
     im1=lectureimagepgm(av[1],&nl,&nc);
@@ -90,4 +90,4 @@ int main (int ac, char **av) {
     libere_image_double(im2);
     libere_image_double(im3);
     return 0;
-}
+}*/
